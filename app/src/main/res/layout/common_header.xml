@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relative_root"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
+        android:background="@color/black"
+        android:gravity="center_vertical"
+        android:padding="0.0px">
+
+        <ImageView
+            android:id="@+id/titleLeftView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxWidth="48.0dip"
+            android:minWidth="48.0dip"
+            android:scaleType="centerInside"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/titleCenterView"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/linearRightView"
+            android:layout_toRightOf="@+id/titleLeftView"
+            android:text="全部问题全部问题全部问题全部问题全部问题全部问题全部问题全部问题"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/linearRightView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:layout_marginRight="@dimen/space_10"
+            android:singleLine="true">
+
+            <ImageView
+                android:id="@+id/titleRightView"
+                android:layout_width="wrap_content"
+                android:layout_height="48.0dip"
+                android:minWidth="48.0dip"
+                android:gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/header_htv_righttext"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minWidth="48.0dip"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#E4E9E0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#EAF0E7" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#F0F6EC" />
+
+</LinearLayout>
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relative_root"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:padding="0.0px">
+
+        <ImageView
+            android:id="@+id/titleLeftView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/app_normal_white_selector"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxWidth="48.0dip"
+            android:minWidth="48.0dip"
+            android:scaleType="centerInside"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/titleCenterView"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/linearRightView"
+            android:layout_toRightOf="@+id/titleLeftView"
+            android:text="全部问题全部问题全部问题全部问题全部问题全部问题全部问题全部问题"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/linearRightView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:singleLine="true">
+
+            <ImageView
+                android:id="@+id/titleRightView"
+                android:layout_width="35.0dip"
+                android:layout_height="match_parent"
+                android:background="@color/app_normal_white_selector"
+                android:clickable="false"
+                android:focusable="false"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/header_htv_righttext"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_normal_white_selector"
+                android:gravity="center_vertical"
+                android:padding="8dip"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#E4E9E0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#EAF0E7" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#F0F6EC" />
+
+</LinearLayout>
+  -->

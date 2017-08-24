@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/black" >
+
+        <ImageView
+            android:id="@+id/titleLeftView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxWidth="48.0dip"
+            android:minWidth="48.0dip"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/app_back_icon" />
+
+        <ImageView
+            android:id="@+id/iv_share_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_share_white" />
+
+        <ImageView
+            android:id="@+id/iv_collection_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_share_restaurant"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_collection_white" />
+
+        <TextView
+            android:id="@+id/titleCenterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_share_restaurant"
+            android:layout_toRightOf="@+id/titleLeftView"
+            android:ellipsize="end"
+            android:ems="10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="全部问题全部全部"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <com.wbteam.onesearch.app.weight.DoubleScrollView
+        android:id="@+id/layoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layoutTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <include
+                    android:id="@+id/ll_baseInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/shop_baseinfo_layout" />
+
+                <LinearLayout
+                    android:id="@+id/ll_style_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:visibility="visible"
+                    android:orientation="horizontal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1"
+                    android:background="@color/gray" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContentBottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/layoutTabTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+		                android:layout_height="48.0dip"
+		                android:layout_gravity="bottom"
+		                android:background="@drawable/shape_login_input_background"
+		                app:tabGravity="fill"
+		                app:tabIndicatorColor="#209EEA"
+		                app:tabIndicatorHeight="3dp"
+		                app:tabSelectedTextColor="#209EEA"
+		                app:tabTextColor="@color/black" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray" />
+                </LinearLayout>
+
+                <com.wbteam.onesearch.app.weight.DoubleScrollViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.wbteam.onesearch.app.weight.DoubleScrollView>
+
+</LinearLayout><!-- <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/black" >
+
+        <ImageView
+            android:id="@+id/titleLeftView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxWidth="48.0dip"
+            android:minWidth="48.0dip"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/app_back_icon" />
+
+        <ImageView
+            android:id="@+id/iv_share_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_share_white" />
+
+        <ImageView
+            android:id="@+id/iv_collection_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_share_restaurant"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_collection_white" />
+
+        <TextView
+            android:id="@+id/titleCenterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_share_restaurant"
+            android:layout_toRightOf="@+id/titleLeftView"
+            android:ellipsize="end"
+            android:ems="10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="全部问题全部全部"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/ll_baseInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/shop_baseinfo_layout" />
+
+    <LinearLayout
+        android:id="@+id/ll_style_info"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:background="@color/gray" />
+
+    <com.wbteam.onesearch.app.weight.PagerSlidingTabStrip
+        android:id="@+id/pager_tabstrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sliding_tab_strip_background"
+        app:allowWidthFull="true"
+        app:slidingBlock="@drawable/image_sliding_block" >
+    </com.wbteam.onesearch.app.weight.PagerSlidingTabStrip>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout> -->

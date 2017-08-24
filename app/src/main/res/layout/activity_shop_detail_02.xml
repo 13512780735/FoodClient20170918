@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56.0dip"
+        android:background="@color/black" >
+
+        <ImageView
+            android:id="@+id/titleLeftView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/app_back_icon" />
+
+        <ImageView
+            android:id="@+id/iv_share_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_share_white" />
+
+        <ImageView
+            android:id="@+id/iv_collection_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_share_restaurant"
+            android:background="@drawable/selector_normal_tran2white40"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/space_10"
+            android:scaleType="centerInside"
+            android:singleLine="true"
+            android:src="@drawable/icon_collection_white" />
+
+        <TextView
+            android:id="@+id/titleCenterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_share_restaurant"
+            android:layout_toRightOf="@+id/titleLeftView"
+            android:ellipsize="end"
+            android:ems="10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="全部问题全部全部"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <com.scrollablelayout.ScrollableLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/container_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <include
+                android:id="@+id/ll_baseInfo"
+                android:layout_width="match_parent"
+                android:layout_height="200.0dip"
+                android:layout_marginLeft="-2dp"
+                android:layout_marginRight="-1dp"
+                layout="@layout/shop_baseinfo_layout" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_style_info"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:background="@color/app_activity_background"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <com.shizhefei.view.indicator.FixedIndicatorView
+            android:id="@+id/fragment_tabmain_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_tabmain_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+    </com.scrollablelayout.ScrollableLayout>
+
+</LinearLayout>

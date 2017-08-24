@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_start_cancel"
+        android:layout_width="80.0dip"
+        android:layout_height="30.0dip"
+        android:layout_gravity="end|top|center"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="10.0dip"
+        android:background="@drawable/shape_ad_cancel"
+        android:gravity="center"
+        android:padding="5.0dip"
+        android:text="跳过"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</FrameLayout>

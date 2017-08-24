@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:background="@drawable/selector_normal_white2gray" >
+
+        <ImageView
+            android:id="@+id/iv_recommend_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white40"
+            android:gravity="center_vertical"
+            android:padding="@dimen/space_6"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_food_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:maxLines="1"
+                android:text="菜价格"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_level_5" />
+
+            <TextView
+                android:id="@+id/tv_food_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/tv_food_price"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="菜名"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_level_5" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

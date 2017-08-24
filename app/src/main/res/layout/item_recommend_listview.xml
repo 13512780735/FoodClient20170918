@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_normal_white2gray"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/iv_recommend_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"  
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_recommend_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white40"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/space_5"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70.0dip"
+        android:padding="@dimen/space_5" >
+
+        <com.wbteam.onesearch.app.weight.CircleImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="@dimen/space_60"
+            android:layout_height="@dimen/space_60"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_face_default"
+            app:border_color="@color/white"
+            app:border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/iv_user_avatar"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/rl_dish_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_recommend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="我的姓名"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_level_1" />
+
+                <TextView
+                    android:id="@+id/tv_recommend_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@drawable/img_location_icon"
+                    android:drawablePadding="@dimen/space_3"
+                    android:gravity="center"
+                    android:text="我的距離"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_level_1" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_recommend_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/space_5"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="地址信息"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_level_3" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

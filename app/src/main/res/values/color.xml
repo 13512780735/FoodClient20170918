@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+	<color name="white40">#40000000</color>
+	<color name="white80">#80000000</color>
+	<color name="main_gray">#9A9A9A</color>
+	<color name="header_bg">#303133</color>
+	
+	<color name="window_background">#EBEBEB</color>
+	
+	<color name="blue">#209EEA</color>
+    <color name="blue_dark">#0A86D1</color>
+    
+    <color name="text_color">@color/black</color>
+    <color name="shouyetabwedght_defail">#2ba1f9</color>
+    <color name="shouyetabwedght_check">#BEBEBE</color>
+    
+    <color name="status_bar_bg">#EF3A19</color>
+    
+    <color name="app_activity_background">#40DADADA</color>
+    
+    <color name="timeline_clickable_text_highlighted_background">#ffbedfff</color>
+    <color name="main_link_text_color">#ff507daf</color>
+    
+    <color name="app_divider_color_gray">#DADADA</color>
+    
+    <color name="app_bg_gray">#F5F5F5</color>
+    <color name="gray">#cccccc</color>
+    <!-- fragment discover -->
+    <color name="discover_big_item_background_normal">#fffdfdfd</color>
+    <color name="discover_big_item_background_pressed">#fff1f1f1</color>
+    
+      <!-- 下拉刷新时，颜色值 -->
+    <color name="swiperefresh_color1">#ff00ddff</color>
+    <color name="swiperefresh_color2">#ffffbb33</color>
+    <color name="swiperefresh_color3">#ffff4444</color>
+    <color name="swiperefresh_color4">#ffaa66cc</color>
+    
+    <color name="disable_or_hint_white">#4Cffffff</color>
+    <color name="main_text_black">#DE000000</color>
+    
+    <color name="main_text">#F5A623</color>
+     <color name="text_color_grey">#a6a4a4</color>
+    
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="bottom_bar_labels">
+        <item>首页</item>
+        <item>推介</item>
+        <item>餐厅</item>
+        <item>优惠</item>
+        <item>我的</item>
+    </string-array>
+	
+    <string-array name="array_recommend">
+        <item>本期精选</item>
+        <item>往期回看</item>
+    </string-array>
+    
+   <string-array name="array_shop_detail">
+        <item>简介</item>
+        <item>必食推介</item>
+        <item>优惠</item>
+        <item>餐牌</item>
+    </string-array>
+    
+</resources>

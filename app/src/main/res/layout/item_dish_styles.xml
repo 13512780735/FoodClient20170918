@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_normal_white2white40"
+        android:orientation="vertical"
+        android:padding="@dimen/space_10" >
+
+        <ImageView
+            android:id="@+id/iv_dish_img"
+            android:layout_width="@dimen/space_95"
+            android:layout_height="@dimen/space_100"
+            android:minHeight="@dimen/space_100"
+            android:minWidth="@dimen/space_90"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_toRightOf="@id/iv_dish_img"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/rl_dish_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_dish_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="我的姓名"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_level_1" />
+
+                <TextView
+                    android:id="@+id/tv_dish_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@drawable/img_location_icon"
+                    android:drawablePadding="@dimen/space_3"
+                    android:gravity="center"
+                    android:text="我的距離"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_level_1" />
+            </RelativeLayout>
+
+            <com.wbteam.onesearch.app.weight.TweetTextView
+                android:id="@+id/tv_dish_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_5"
+                android:layout_marginTop="@dimen/space_5"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:maxLines="3"
+                android:text="介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹菜係的介紹"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_level_3" />
+
+            <TextView
+                android:id="@+id/tv_dish_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:singleLine="true"
+                android:text="我的位置"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_level_3" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginLeft="@dimen/space_10"
+        android:background="@color/gray" />
+
+</LinearLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/iknow_alert_dialog_panel_wrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="20.0dip"
+    android:background="@drawable/common_alert_dialog_shape_fill_box"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/iknow_alert_dialog_title_template"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:background="@drawable/common_alter_dialog_title_bg"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingBottom="11.0dip"
+        android:paddingLeft="18.0dip"
+        android:paddingRight="18.0dip"
+        android:paddingTop="11.0dip" >
+
+        <ImageView
+            android:id="@+id/iknow_alert_dialog_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/iknow_alert_dialog_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="发现新版本"
+            android:textColor="#ff888888"
+            android:textSize="@dimen/text_max_size" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/common_alert_dialog_title_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffdedede" />
+
+    <RelativeLayout
+        android:id="@+id/iknow_alert_dialog_content_scroll_view_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip" >
+
+        <ScrollView
+            android:id="@+id/iknow_alert_dialog_content_scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15.0dip"
+            android:paddingTop="20.0dip" >
+
+            <com.wbteam.onesearch.app.weight.TweetTextView
+                android:id="@+id/iknow_alert_dialog_content_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:paddingRight="@dimen/space_16"
+                android:text="对话框内容"
+                android:textColor="#ff333333"
+                android:textSize="@dimen/text_max_size" />
+        </ScrollView>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/iknow_alert_dialog_custom_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1.0"
+        android:background="#00000000" >
+
+        <FrameLayout
+            android:id="@+id/iknow_alert_dialog_custom_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:paddingBottom="10.0dip"
+            android:paddingLeft="20.0dip"
+            android:paddingRight="20.0dip"
+            android:paddingTop="10.0dip" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/iknow_alert_dialog_button_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:layout_gravity="top"
+            android:background="#ffd8d8d8" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/iknow_alert_dialog_button1"
+                style="@style/common_negative_button"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="忽略" />
+
+            <ImageView
+                android:id="@+id/btn_group_line"
+                android:layout_width="1.0dip"
+                android:layout_height="fill_parent"
+                android:background="#ffd8d8d8" />
+
+            <Button
+                android:id="@+id/iknow_alert_dialog_button2"
+                style="@style/common_positive_button"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="立即更新" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

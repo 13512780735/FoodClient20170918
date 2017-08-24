@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_10" >
+
+        <TextView
+            android:id="@+id/tv_current_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前:"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_current_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_current_hint"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
+    </RelativeLayout>
+
+    <com.wbteam.onesearch.app.weight.MyGridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/space_10"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/space_10" />
+
+</LinearLayout>

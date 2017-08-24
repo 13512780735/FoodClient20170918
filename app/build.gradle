@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.wbteam.onesearch"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 21
+        versionName "1.0.20"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'znlc'
+            keyPassword 'pol1990k'
+            storeFile file('D:/as/food/qianming/xinshi_0912.keystore')
+            storePassword 'pol1990k'
+        }
+        debug {
+            storeFile file('D:/as/food/qianming/xinshi_0912.keystore')
+            storePassword "pol1990k"
+            keyAlias "znlc"
+            keyPassword "pol1990k"
+
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            ndk {
+                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "x86", "x86_64"//动态库强制只编译filters中的
+            }
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "x86", "x86_64"//动态库强制只编译filters中的
+            }
+        }
+    }
+}
+android {
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile files('libs/android-async-http-1.4.5.jar')
+    compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/Bughd_android_sdk_v1.3.7.jar')
+    compile files('libs/fastjson-1.2.6.jar')
+    compile files('libs/gson-2.2.4.jar')
+    compile files('libs/IndoorscapeAlbumPlugin.jar')
+    compile files('libs/KJFrameForAndroid_v2.223.jar')
+    compile files('libs/MobCommons-2016.0830.1940.jar')
+    compile files('libs/MobTools-2016.0830.1940.jar')
+    compile files('libs/org.apache.http.legacy.jar')
+    compile files('libs/ShareSDK-Core-2.7.7.jar')
+    compile files('libs/ShareSDK-QQ-2.7.7.jar')
+    compile files('libs/ShareSDK-QZone-2.7.7.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.7.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.7.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.7.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.7.jar')
+    compile files('libs/universal-image-loader-1.9.3.jar')
+    compile project(path: ':pulltorefreshlibrary')
+}

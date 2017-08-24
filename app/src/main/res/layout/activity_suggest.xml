@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_activity_background"
+    android:orientation="vertical" >
+
+    <com.wbteam.onesearch.app.weight.HeaderLayout
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:center_text="APP吐槽"
+        app:left_image="@drawable/app_back_icon" />
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_title"
+        android:layout_marginTop="@dimen/space_8"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:text="填写吐槽内容"
+            android:textSize="@dimen/text_mid_size" />
+
+        <EditText
+            android:id="@+id/edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/shape_login_input_background"
+            android:gravity="left|top"
+            android:hint="详细描述你要吐槽的信息"
+            android:padding="@dimen/space_5"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/text_size_level_1" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="联系人"
+            android:textSize="@dimen/text_mid_size" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/shape_login_input_background"
+            android:gravity="center_vertical|left"
+            android:hint="留下你的大名"
+            android:padding="@dimen/space_5"
+            android:textSize="@dimen/text_size_level_1" />
+        
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="留下你的联系方式"
+            android:textSize="@dimen/text_mid_size" />
+
+        <EditText
+            android:id="@+id/edit_contact"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/shape_login_input_background"
+            android:gravity="center_vertical|left"
+            android:hint="联系电话"
+            android:padding="@dimen/space_5"
+            android:textSize="@dimen/text_size_level_1" />
+
+        <Button
+            android:id="@+id/button_send"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_margin="@dimen/space_15"
+            android:background="@drawable/selector_button_blue"
+            android:text="提交"
+            android:textColor="@color/white" />
+    </LinearLayout>
+    
+    
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.wbteam.onesearch.app.weight.HeaderLayout
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:center_text="@string/title_fragment_index02"
+        app:left_image="@null" />
+
+    <!-- 导航标题栏 -->
+    <com.wbteam.onesearch.app.weight.PagerSlidingTabStrip
+        android:id="@+id/pager_tabstrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sliding_tab_strip_background"
+        app:allowWidthFull="true"
+        app:slidingBlock="@drawable/image_sliding_block" >
+    </com.wbteam.onesearch.app.weight.PagerSlidingTabStrip>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_level_1">15sp</dimen>
+    <dimen name="text_size_level_2">14sp</dimen>
+    <dimen name="text_size_level_3">13sp</dimen>
+    <dimen name="text_size_level_5">11sp</dimen>
+    
+     <!-- 文字大小 -->
+    <dimen name="text_mini_size">12sp</dimen>  
+    <dimen name="text_mid_size">14sp</dimen>
+    <dimen name="text_max_size">18sp</dimen>
+    <dimen name="topbar_title">12sp</dimen>
+    <dimen name="choice_text">20sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_20">20sp</dimen>
+    <dimen name="text_25">25sp</dimen>
+    <dimen name="text_30">30sp</dimen>
+    <!-- 按钮文字大小 -->
+    <dimen name="button_text">20.0sp</dimen>
+
+    <dimen name="space_160">160.0dip</dimen>
+    <dimen name="space_134">134.0dip</dimen>
+    <dimen name="space_120">120.0dip</dimen>
+    <dimen name="space_101">101.0dip</dimen>
+    <dimen name="space_100">100.0dip</dimen>
+    <dimen name="space_95">95.0dip</dimen>
+    <dimen name="space_90">90.0dip</dimen>
+    <dimen name="space_75">75.0dip</dimen>
+    <dimen name="space_80">80.0dip</dimen>
+    <dimen name="space_60">60.0dip</dimen>
+    <dimen name="space_59">59.0dip</dimen>
+    <dimen name="space_55">55.0dip</dimen>
+    <dimen name="space_50">50.0dip</dimen>
+    <dimen name="space_45">45.0dip</dimen>
+    <dimen name="space_40">40.0dip</dimen>
+    <dimen name="space_39">39.0dip</dimen>
+    <dimen name="space_35">35.0dip</dimen>
+    <dimen name="space_30">30.0dip</dimen>
+    <dimen name="space_29">29.0dip</dimen>
+    <dimen name="space_28">28.0dip</dimen>
+    <dimen name="space_27">27.0dip</dimen>
+    <dimen name="space_26">26.0dip</dimen>
+    <dimen name="space_25">25.0dip</dimen>
+    <dimen name="space_24">24.0dip</dimen>
+    <dimen name="space_23">23.0dip</dimen>
+    <dimen name="space_22">22.0dip</dimen>
+    <dimen name="space_21">21.0dip</dimen>
+    <dimen name="space_20">20.0dip</dimen>
+    <dimen name="space_19">19.0dip</dimen>
+    <dimen name="space_18">18.0dip</dimen>
+    <dimen name="space_17">17.0dip</dimen>
+    <dimen name="space_16">16.0dip</dimen>
+    <dimen name="space_15">15.0dip</dimen>
+    <dimen name="space_14">14.0dip</dimen>
+    <dimen name="space_13">13.0dip</dimen>
+    <dimen name="space_12">12.0dip</dimen>
+    <dimen name="space_11">11.0dip</dimen>
+    <dimen name="space_10">10.0dip</dimen>
+    <dimen name="space_9">9.0dip</dimen>
+    <dimen name="space_8">8.0dip</dimen>
+    <dimen name="space_7">7.0dip</dimen>
+    <dimen name="space_6">6.0dip</dimen>
+    <dimen name="space_5">5.0dip</dimen>
+    <dimen name="space_4">4.0dip</dimen>
+    <dimen name="space_3">3.0dip</dimen>
+    <dimen name="space_2">2.0dip</dimen>
+    <dimen name="space_1">1.0dip</dimen>
+
+    <dimen name="px_01">1.0px</dimen>
+    
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮paddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- 顶部按钮paddingRight -->
+    <dimen name="pickerview_topbar_paddingright">30dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">20sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <!-- 选项文字大小 需要配合 bools.xml 的 pickerview_customTextSize 为 true 才有效果-->
+    <dimen name="pickerview_textsize">20sp</dimen>
+    
+    
+    <dimen name="timeline_small_card_icon_width">12.0dip</dimen>
+    <dimen name="timeline_small_card_icon_height">12.0dip</dimen>
+    <dimen name="timeline_small_card_icon_margin_left">5.0dip</dimen>
+    <dimen name="timeline_small_card_triangle_margin_left">5.0dip</dimen>
+    <dimen name="timeline_small_card_triangle_margin_right">4.0dip</dimen>
+    <dimen name="timeline_small_card_title_margin_left">5.0dip</dimen>
+    <dimen name="timeline_small_card_title_text_size">12.0sp</dimen>
+    
+    <dimen name="timeline_small_card_height">20.0dip</dimen>
+    <dimen name="timeline_small_card_min_width">66.0dip</dimen>
+    <dimen name="timeline_small_card_padding_right">5.0dip</dimen>
+
+</resources>
