@@ -428,6 +428,7 @@ public class Index03Fragment extends BaseFragmentV4 implements OnClickListener {
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(
                         "最后更新时间:" + label);
                 //refresh();
+                sendReuqest(lat, lng);
                 new GetDataTask().execute();
             }
 
@@ -456,6 +457,7 @@ public class Index03Fragment extends BaseFragmentV4 implements OnClickListener {
                         "已经全部数据加载完毕...");
                 mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel(
                         "已经全部数据加载完毕...");
+                sendReuqest(lat, lng);
                 new GetDataTask().execute();
 //				}
 

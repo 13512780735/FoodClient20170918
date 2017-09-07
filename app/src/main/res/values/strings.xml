@@ -5,19 +5,19 @@
     <string name="hello_world">Hello world!</string>
     <string name="share">分享</string>
     <string name="action_settings">Settings</string>
-	<string name="exit_hint">再次点击退出拣饮择食应用程序！</string>
-	
-	<string name="login_hint_title">请选择以下方式登录</string>
-	<string name="login_qq_text">QQ</string>
-	<string name="login_weibo_text">微博</string>
-	<string name="login_weixin_text">微信</string>
-	
-	<string name="title_fragment_index02">推介</string>
+    <string name="exit_hint">再次点击退出拣饮择食应用程序！</string>
 
-		<string name="auth_cancel">授权操作已取消</string>
+    <string name="login_hint_title">请选择以下方式登录</string>
+    <string name="login_qq_text">QQ</string>
+    <string name="login_weibo_text">微博</string>
+    <string name="login_weixin_text">微信</string>
+
+    <string name="title_fragment_index02">推介</string>
+
+    <string name="auth_cancel">授权操作已取消</string>
     <string name="auth_error">授权操作遇到错误，请阅读Logcat输出; \n 如微信登录，需要微信客户端</string>
     <string name="auth_complete">授权成功，正在跳转登录操作…</string>
-    
+
     <integer name="app_version_code">2</integer>
 
     <string name="app_version">2.0.0</string>
@@ -32,10 +32,10 @@
     <string name="logining">使用%s帐号登录中…</string>
     <string name="if_register_needed">如果您需要注册功能…</string>
     <string name="after_auth">一般来说第三方登录时，第三方平台已经为您完成用户身份校验，您可以放心让用户登录。\n\n但如果您需要判断用户是否为新用户，可以在授权操作完成后，将用户的信息通过字段“HashMap userInfo”携带给login方法。客户端通过“String userId”执行登录请求，如果服务端判定此userId为未注册用户，可以将userInfo发送给注册接口，获取用户在此平台上的昵称、头像等数据，然后执行注册</string>
-    
+
     <string name="tpl_ok">确定</string>
     <string name="tpl_cancel">取消</string>
-    
+
     <string name="tpl_key_user_icon">头像</string>
     <string name="tpl_key_user_name">昵称</string>
     <string name="tpl_key_user_gender">性别</string>
@@ -44,20 +44,20 @@
     <string name="tpl_value_user_name">昵称</string>
     <string name="tpl_value_user_gender">性别</string>
     <string name="tpl_value_user_note">请填写备注信息</string>
-    
+
     <string name="tpl_sign_user_info">用户信息</string>
     <string name="tpl_sign_up">注册</string>
     <string name="tpl_girl">女</string>
     <string name="tpl_boy">男</string>
-    
+
     <string name="tpl_camera">拍照</string>
     <string name="tpl_picture">从相册获取</string>
-    
+
     <string name="tpl_change_user_name_title">更改名字</string>
     <string name="tpl_change_user_note_title">更改备注</string>
     <string name="tpl_input_user_name_hint">好名字可以让你的朋友更容易记住你</string>
     <string name="tpl_input_user_note_hint">自定义备注信息，给你带来更多吸引</string>
-    
+
     <string name="tpl_no_sdcard">sdcard 卡不存在</string>
     <string name="tpl_msg_login_hint">请输入手机号码</string>
     <string name="tpl_verify_code_hint">请输验证码</string>
@@ -68,8 +68,8 @@
 
     <string name="label_webview">广告</string>
     <string name="company_phone"></string>
-    
-     <!-- Error View -->
+
+    <!-- Error View -->
     <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
     <string name="error_view_no_data">暂无内容</string>
     <string name="error_view_loading">加载中…</string>
@@ -80,5 +80,5 @@
     <string name="loading">加载中…</string>
     <string name="loading_no_more">持续更新中</string>
     <string name="tip_load_data_error">对不起,无法加载数据.</string>
-	
+
 </resources>

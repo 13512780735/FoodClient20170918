@@ -15,6 +15,26 @@ public class CityModel {
 	private String title;
 	private String pid;
 	private List<AreaModel> child;
+	private boolean nameIsChecked;
+
+	@Override
+	public String toString() {
+		return "CityModel{" +
+				"id='" + id + '\'' +
+				", title='" + title + '\'' +
+				", pid='" + pid + '\'' +
+				", child=" + child +
+				", nameIsChecked=" + nameIsChecked +
+				'}';
+	}
+
+	public boolean isNameIsChecked() {
+		return nameIsChecked;
+	}
+
+	public void setNameIsChecked(boolean nameIsChecked) {
+		this.nameIsChecked = nameIsChecked;
+	}
 
 	public CityModel() {
 		super();

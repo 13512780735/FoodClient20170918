@@ -13,6 +13,25 @@ public class AreaModel {
 	private String id;
 	private String title;
 	private String pid;
+	private boolean isChecked;
+
+	@Override
+	public String toString() {
+		return "AreaModel{" +
+				"id='" + id + '\'' +
+				", title='" + title + '\'' +
+				", pid='" + pid + '\'' +
+				", isChecked=" + isChecked +
+				'}';
+	}
+
+	public boolean isChecked() {
+		return isChecked;
+	}
+
+	public void setChecked(boolean checked) {
+		isChecked = checked;
+	}
 
 	public AreaModel() {
 		super();

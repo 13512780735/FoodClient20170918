@@ -444,35 +444,20 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
                 mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel("松开开始刷新数据");
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(
                         "最后更新时间:" + label);
-                //refresh();
+				sendReuqest(lat, lng);
 				new GetDataTask().execute();
             }
 
             @Override
             public void onPullUpToRefresh(
                     PullToRefreshBase<ListView> refreshView) {
-//				//page++;
-//				int totalPage = Integer.parseInt(total) % 10;
-//				if (totalPage == 0) {
-//					totalPage = Integer.parseInt(total) / 10;
-//				} else {
-//					totalPage = Integer.parseInt(total) / 10 + 1;
-//				}
-//				if (page <= totalPage) {// 上一次请求有数据
-//					// 自定义上拉header内容
-//					listView.getLoadingLayoutProxy().setRefreshingLabel(
-//							"正在加载更多数据");
-//					listView.getLoadingLayoutProxy().setPullLabel(
-//							"上拉可以加载更多");
-//					listView.getLoadingLayoutProxy().setReleaseLabel(
-//							"松开立即加载更多");
-//
-//				} else {
+
                 // 上一次请求已经没有数据了
                 mPullToRefreshListView.getLoadingLayoutProxy().setPullLabel(
                         "已经全部数据加载完毕...");
                 mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel(
                         "已经全部数据加载完毕...");
+				sendReuqest(lat, lng);
 				new GetDataTask().execute();
 //				}
 
@@ -581,7 +566,6 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
 		view_search_layout.setOnClickListener(this);
 	}
 
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -616,6 +600,7 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
 			params.put("style", "");// 菜系id
 			params.put("lng", lng + "");// 经度
 			params.put("lat", lat + "");// 纬度
+			params.put("is_index","1");
 			FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
 
 				@Override

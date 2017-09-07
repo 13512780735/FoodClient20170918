@@ -31,7 +31,7 @@
     <!-- fragment discover -->
     <color name="discover_big_item_background_normal">#fffdfdfd</color>
     <color name="discover_big_item_background_pressed">#fff1f1f1</color>
-    
+    <color name="line_color">#DBDBDB</color>
       <!-- 下拉刷新时，颜色值 -->
     <color name="swiperefresh_color1">#ff00ddff</color>
     <color name="swiperefresh_color2">#ffffbb33</color>
@@ -43,5 +43,8 @@
     
     <color name="main_text">#F5A623</color>
      <color name="text_color_grey">#a6a4a4</color>
-    
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="defualt_textcolor">#000000</color>
+    <color name="defualt_window_background">#FFFFFF</color>
 </resources>

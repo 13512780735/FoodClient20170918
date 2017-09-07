@@ -11,7 +11,17 @@
     <style name="AppThemeTranslucent" parent="@style/AppTheme">
         <item name="android:windowIsTranslucent">true</item>
     </style>
-
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Actionbar color -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--Status bar color-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--Window color-->
+            <item name="android:windowBackground">@color/defualt_window_background</item>
+        <item name="android:textColor">@color/defualt_textcolor</item>
+    </style>
     <style name="activityAnimation" parent="@android:style/Animation">
         <item name="android:activityOpenEnterAnimation">@anim/push_right_in</item>
         <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>

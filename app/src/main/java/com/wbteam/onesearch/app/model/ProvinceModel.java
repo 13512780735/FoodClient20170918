@@ -1,5 +1,6 @@
 package com.wbteam.onesearch.app.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @created:2016-9-26 上午1:43:56
  * @contact:QQ-441293364 TEL-15105695563
  **/
-public class ProvinceModel {
+public class ProvinceModel implements Serializable{
 	private String id;
 	private String title;
 	private String pid;

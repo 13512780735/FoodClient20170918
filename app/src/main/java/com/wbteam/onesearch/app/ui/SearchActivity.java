@@ -1,5 +1,6 @@
 package com.wbteam.onesearch.app.ui;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -7,7 +8,10 @@ import java.util.TreeMap;
 import org.apache.http.Header;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -45,7 +49,7 @@ import com.wbteam.onesearch.app.utils.ToastUtils;
 
 /**
  * 搜索
- * 
+ *
  * @autor:码农哥
  * @version:1.0
  * @created:2016-9-25 上午5:36:02
@@ -54,346 +58,395 @@ import com.wbteam.onesearch.app.utils.ToastUtils;
 @ContentView(R.layout.activity_search)
 public class SearchActivity extends BaseActivity implements OnClickListener {
 
-	@ViewInject(R.id.iv_back_icon)
-	private ImageView iv_back_icon;
+    @ViewInject(R.id.iv_back_icon)
+    private ImageView iv_back_icon;
 
-	@ViewInject(R.id.search_content_edit)
-	private EditText search_content_edit;
+    @ViewInject(R.id.search_content_edit)
+    private EditText search_content_edit;
 
-	@ViewInject(R.id.tv_search)
-	private TextView tv_search;
+    @ViewInject(R.id.tv_search)
+    private TextView tv_search;
 
-	@ViewInject(R.id.view_area_layout)
-	private RelativeLayout view_area_layout;
+    @ViewInject(R.id.view_area_layout)
+    private RelativeLayout view_area_layout;
 
-	@ViewInject(R.id.view_nearby_layout)
-	private RelativeLayout view_nearby_layout;
+    @ViewInject(R.id.view_nearby_layout)
+    private RelativeLayout view_nearby_layout;
 
-	@ViewInject(R.id.view_style_layout)
-	private RelativeLayout view_style_layout;
+    @ViewInject(R.id.view_style_layout)
+    private RelativeLayout view_style_layout;
 
-	// @ViewInject(R.id.view_filter_style)
-	// private LinearLayout view_filter_style;
-	
-	@ViewInject(R.id.listview)
-	private ListView mListView;
-	private DishAdapter mAdapter = null;
+    // @ViewInject(R.id.view_filter_style)
+    // private LinearLayout view_filter_style;
 
-	@ViewInject(R.id.tv_style_title)
-	private TextView tv_style_title;
+    @ViewInject(R.id.listview)
+    private ListView mListView;
+    private DishAdapter mAdapter = null;
 
-	private UserInfo mUserInfo = null;
-	
-	private String ukey="";
-	
-	private Handler mHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			String search_content = search_content_edit.getText().toString().trim();
-			searchShopList(search_content);
-		};
-	};
+    @ViewInject(R.id.tv_style_title)
+    private TextView tv_style_title;
+    List<StyleModel> mStyleModels = null;
+    ArrayList<ProvinceModel> provinceModels;
+    AreaDialog mDialog = null;
 
-	@Override
-	public void initListener() {
-		mUserInfo = AppContext.getInstance().getUserInfo();
-		if(mUserInfo!=null){
-			ukey = mUserInfo.getUkey();
-		}
-		
-		mListView.setOnItemClickListener(new OnItemClickListener() {
+    private UserInfo mUserInfo = null;
+    private String ukey = "";
+    private String area1="";
+    private String city="";
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            String search_content = search_content_edit.getText().toString().trim();
+            searchShopList(search_content);
+        }
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				try {
-					if (mAdapter != null) {
-						DishModel dishModel = mAdapter.getItem(position);
-						if (dishModel != null) {
-							Intent mIntent = new Intent(context, ShopDetailActivity.class);
-							mIntent.putExtra("shop_id", dishModel.getId());
-							startActivity(mIntent);
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    };
+    private String cooking;
 
-	@Override
-	public void initIntent() {
 
-	}
+    @Override
+    public void initListener() {
+        mUserInfo = AppContext.getInstance().getUserInfo();
+        if (mUserInfo != null) {
+            ukey = mUserInfo.getUkey();
+        }
 
-	@Override
-	public void initData() {
-		initSearchData();
-	}
+        mListView.setOnItemClickListener(new OnItemClickListener() {
 
-	private void initSearchData() {
-		if (NetUtils.isOnline()) {
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			if (null != mUserInfo) {
-				params.put("ukey", mUserInfo.getUkey());
-			} else {
-				params.put("ukey", "");
-			}
-			FoodClientApi.post("Index/search_type", params, new JsonResponseCallback<BizResult>() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    if (mAdapter != null) {
+                        DishModel dishModel = mAdapter.getItem(position);
+                        if (dishModel != null) {
+                            Intent mIntent = new Intent(context, ShopDetailActivity.class);
+                            mIntent.putExtra("shop_id", dishModel.getId());
+                            mIntent.putExtra("distance",dishModel.getDistance());
+                            startActivity(mIntent);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					if (body != null && body.getCode() == 1) {
-						JSONObject jsonObject = JSONObject.parseObject(body.getData());
-						mStyleModels = JSON.parseArray(jsonObject.getString("style"), StyleModel.class);
-						StyleModel styleModel = new StyleModel();
-						styleModel.setTitle("全部");
-						styleModel.setId("-1");
-						styleModel.setLogo("");
-						mStyleModels.add(0, styleModel);
-						
-						provinceModels = JSON.parseArray(jsonObject.getString("city"), ProvinceModel.class);
-						if (mDialog == null)
-							mDialog = new AreaDialog(context, mHandler);
-						mDialog.setProvinceList(provinceModels);
-					}
-				}
-			});
-		} else {
-			ToastUtils.showToast(context, "当前无网络链接");
-		}
-	}
+    @Override
+    public void initIntent() {
 
-	List<StyleModel> mStyleModels = null;
-	List<ProvinceModel> provinceModels = null;
-	AreaDialog mDialog = null;
+    }
 
-	@OnClick({ R.id.iv_back_icon, R.id.tv_search, R.id.view_area_layout, R.id.view_style_layout, R.id.view_nearby_layout })
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.iv_back_icon:
-			finish();
-			break;
+    @Override
+    public void initData() {
+        initSearchData();
+    }
 
-		case R.id.tv_search:
-			String search_content = search_content_edit.getText().toString().trim();
-			if (StringUtils.isEmpty(search_content)) {
-				ToastUtils.showToast(context, "搜索内容不能为空！");
-				return;
-			}
-			searchShopList(search_content);
-			break;
-			
-		case R.id.view_area_layout:
-			if (mDialog == null){
-				mDialog = new AreaDialog(context, mHandler);
-				mDialog.setProvinceList(provinceModels);
-			}
-			mDialog.show();
-			break;
-			
-		case R.id.view_nearby_layout:
-			//附近餐厅
-			searchNearby();
-			break;
+    private void initSearchData() {
+        if (NetUtils.isOnline()) {
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            if (null != mUserInfo) {
+                params.put("ukey", mUserInfo.getUkey());
+            } else {
+                params.put("ukey", "");
+            }
+            FoodClientApi.post("Index/search_type", params, new JsonResponseCallback<BizResult>() {
 
-		case R.id.view_style_layout:
-			DialogUtils.chooseStyleDialog(SearchActivity.this, mStyleModels, new OnItemClickListener() {
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    DialogUtils.dismiss();
+                    if (body != null && body.getCode() == 1) {
+                        JSONObject jsonObject = JSONObject.parseObject(body.getData());
+                        mStyleModels = JSON.parseArray(jsonObject.getString("style"), StyleModel.class);
+                        StyleModel styleModel = new StyleModel();
+                        styleModel.setTitle("全部");
+                        styleModel.setId("-1");
+                        styleModel.setLogo("");
+                        mStyleModels.add(0, styleModel);
+                        provinceModels = (ArrayList<ProvinceModel>) JSON.parseArray(jsonObject.getString("city"), ProvinceModel.class);
+                        city = provinceModels.get(0).getId();
+                        Log.d("TAG888", provinceModels.toString());
+//						if (mDialog == null)
+//						mDialog = new AreaDialog(context, mHandler);
+//						mDialog.setProvinceList(provinceModels);
 
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					try {
-						if (mStyleModels != null) {
-							StyleModel styleModel = mStyleModels.get(position);
-							tv_style_title.setText(styleModel.getTitle());
-							styleId = styleModel.getId();
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					DialogUtils.dismiss();
-					if(mStyleModels!=null&&mStyleModels.get(position).getId().equals("-1")){
-						searchAll();
-					}else{
-						searchShopList("");
-					}
-				}
-			});
-			break;
+                    }
+                }
+            });
+        } else {
+            DialogUtils.dismiss();
+            ToastUtils.showToast(context, "当前无网络链接");
+        }
+    }
 
-		default:
-			break;
-		}
-	}
-	
-	private void searchAll(){
-		if (NetUtils.isOnline()) {
-			DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("ukey", ukey);
-			params.put("keyword", "");
-			if(mDialog!=null){
-				params.put("city", mDialog.getCityId());// 城市id
-				params.put("area", mDialog.getAreaId());// 全市时传递0
-				params.put("area1", mDialog.getArea1Id());// 镇id 全市、全区传递0
-			}else{
-				params.put("city", "");// 城市id
-				params.put("area", "");// 全市时传递0
-				params.put("area1", "");// 镇id 全市、全区传递0
-			}
-			params.put("style", "");// 菜系id
-			if (null != mUserInfo) {
-				params.put("lng", mUserInfo.getLng());// 经度
-				params.put("lat", mUserInfo.getLat());// 纬度
-			} else {
-				params.put("lng", Preferences.getString("lng", "", context));// 经度
-				params.put("lat", Preferences.getString("lat", "", context));// 纬度
-			}
-			FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
-				
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					Logger.e("TAG", "" + JSON.toJSONString(body));
-					DialogUtils.dismiss();
-					if (body != null && body.getCode() == 1) {
-						List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-					}else{
-						List<DishModel> dishList = new ArrayList<DishModel>();
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-						ToastUtils.showToast(context, "未搜索到附近的餐厅");
-					}
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					super.onFailure(arg0, arg1, arg2, arg3);
-					DialogUtils.dismiss();
-				}
-			});
-		} else {
-			ToastUtils.showToast(context, "当前无网络连接");
-		}
-	}
-	
-	/**
-	 * 搜索附近餐厅
-	 */
-	private void searchNearby() {
-		if (NetUtils.isOnline()) {
-			DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("ukey", ukey);
-			if (null != mUserInfo) {
-				params.put("lng", mUserInfo.getLng());// 经度
-				params.put("lat", mUserInfo.getLat());// 纬度
-			} else {
-				params.put("lng", Preferences.getString("lng", "", context));// 经度
-				params.put("lat", Preferences.getString("lat", "", context));// 纬度
-			}
-			Logger.e("TAG", "====="+JSON.toJSONString(params));
-			FoodClientApi.post("Res/get_near", params, new JsonResponseCallback<BizResult>() {
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					Logger.e("TAG", "" + JSON.toJSONString(body));
+    @OnClick({R.id.iv_back_icon, R.id.tv_search, R.id.view_area_layout, R.id.view_style_layout, R.id.view_nearby_layout})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back_icon:
+                finish();
+                break;
 
-					if (body != null && body.getCode() == 1) {
-						List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-					}else{
-						List<DishModel> dishList = new ArrayList<DishModel>();
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-						ToastUtils.showToast(context, "未搜索到附近的餐厅");
-					}
-					
-					DialogUtils.dismiss();
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					super.onFailure(arg0, arg1, arg2, arg3);
-					DialogUtils.dismiss();
+            case R.id.tv_search:
+                String search_content = search_content_edit.getText().toString().trim();
+                if (StringUtils.isEmpty(search_content)) {
+                    ToastUtils.showToast(context, "搜索内容不能为空！");
+                    return;
+                }
+                searchShopList(search_content);
+                break;
 
-				}
-			});
-		}else {
-			ToastUtils.showToast(context, "当前无网络连接");
-		}
-	}
-	
-	private String styleId = "";
+            case R.id.view_area_layout:
+//                if (mDialog == null) {
+//                    mDialog = new AreaDialog(context, mHandler);
+//                    mDialog.setProvinceList(provinceModels);
+//                }
+//                mDialog.show();
+                Intent intentArea = new Intent();
+                intentArea.setClass(SearchActivity.this, SearchFilterActivity.class);
+                startActivityForResult(intentArea, 1);
+                break;
 
-	/**
-	 * 搜索餐馆
-	 * 
-	 * @param areaInfo
-	 *            区域信息
-	 * @param search_content
-	 *            搜索内容
-	 * @param styleInfo
-	 *            菜系
-	 */
-	private void searchShopList(String search_content) {
-		if (NetUtils.isOnline()) {
-			DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("ukey", ukey);
-			params.put("keyword", search_content);
-			if(mDialog!=null){
-				params.put("city", mDialog.getCityId());// 城市id
-				params.put("area", mDialog.getAreaId());// 全市时传递0
-				params.put("area1", mDialog.getArea1Id());// 镇id 全市、全区传递0
-			}else{
-				params.put("city", "");// 城市id
-				params.put("area", "");// 全市时传递0
-				params.put("area1", "");// 镇id 全市、全区传递0
-			}
-			params.put("style", styleId);// 菜系id
-			if (null != mUserInfo) {
-				params.put("lng", mUserInfo.getLng());// 经度
-				params.put("lat", mUserInfo.getLat());// 纬度
-			} else {
-				params.put("lng", Preferences.getString("lng", "", context));// 经度
-				params.put("lat", Preferences.getString("lat", "", context));// 纬度
-			}
-			
-			Logger.e("TAG", "====="+JSON.toJSONString(params));
-			
-			FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
+            case R.id.view_nearby_layout:
+                //附近餐厅
+                searchNearby();
+                break;
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					Logger.e("TAG", "" + JSON.toJSONString(body));
+            case R.id.view_style_layout:
+                city="";
+                area1="";
+                Intent intentCook = new Intent();
+                intentCook.setClass(SearchActivity.this, CookingFilterActivity.class);
+                startActivityForResult(intentCook, 2);
+                //        DialogUtils.chooseStyleDialog(SearchActivity.this, mStyleModels, new OnItemClickListener() {
+//
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        try {
+//                            if (mStyleModels != null) {
+//                                StyleModel styleModel = mStyleModels.get(position);
+//                                tv_style_title.setText(styleModel.getTitle());
+//                                styleId = styleModel.getId();
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        DialogUtils.dismiss();
+//                        if (mStyleModels != null && mStyleModels.get(position).getId().equals("-1")) {
+//                            searchAll();
+//                        } else {
+//                            searchShopList("");
+//                        }
+//                    }
+//                });
+                break;
 
-					if (body != null && body.getCode() == 1) {
-						List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-					}else{
-						List<DishModel> dishList = new ArrayList<DishModel>();
-						mAdapter = new DishAdapter(context, dishList);
-						mListView.setAdapter(mAdapter);
-						ToastUtils.showToast(context, "未搜索到你要找的餐厅");
-					}
-					
-					DialogUtils.dismiss();
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					super.onFailure(arg0, arg1, arg2, arg3);
-					DialogUtils.dismiss();
+            default:
+                break;
+        }
+    }
 
-				}
-			});
-		} else {
-			ToastUtils.showToast(context, "当前无网络连接");
-		}
-	}
+    private void searchAll() {
+        Log.d("TAG989", area1);
+        if (NetUtils.isOnline()) {
+           // DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("ukey", ukey);
+            params.put("keyword", "");
+            params.put("city", city);// 城市id
+            //  params.put("area", mDialog.getAreaId());// 全市时传递0
+            params.put("area1", area1);// 镇id 全市、全区传递0
+            params.put("style", "");// 菜系id
+            if (null != mUserInfo) {
+                params.put("lng", mUserInfo.getLng());// 经度
+                params.put("lat", mUserInfo.getLat());// 纬度
+            } else {
+                params.put("lng", Preferences.getString("lng", "", context));// 经度
+                params.put("lat", Preferences.getString("lat", "", context));// 纬度
+            }
+            FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
 
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    Logger.e("TAG", "" + JSON.toJSONString(body));
+                    DialogUtils.dismiss();
+                    if (body != null && body.getCode() == 1) {
+                        List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                    } else {
+                        List<DishModel> dishList = new ArrayList<DishModel>();
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                        ToastUtils.showToast(context, "未搜索到附近的餐厅");
+                    }
+                }
+
+                @Override
+                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    super.onFailure(arg0, arg1, arg2, arg3);
+                    DialogUtils.dismiss();
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                    DialogUtils.dismiss();
+                }
+            });
+
+        } else {
+            DialogUtils.dismiss();
+            ToastUtils.showToast(context, "当前无网络连接");
+        }
+    }
+
+    /**
+     * 搜索附近餐厅
+     */
+    private void searchNearby() {
+        if (NetUtils.isOnline()) {
+            DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("ukey", ukey);
+            if (null != mUserInfo) {
+                params.put("lng", mUserInfo.getLng());// 经度
+                params.put("lat", mUserInfo.getLat());// 纬度
+            } else {
+                params.put("lng", Preferences.getString("lng", "", context));// 经度
+                params.put("lat", Preferences.getString("lat", "", context));// 纬度
+            }
+            Logger.e("TAG", "=====" + JSON.toJSONString(params));
+            FoodClientApi.post("Res/get_near", params, new JsonResponseCallback<BizResult>() {
+
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    Logger.e("TAG", "" + JSON.toJSONString(body));
+                    DialogUtils.dismiss();
+                    if (body != null && body.getCode() == 1) {
+                        List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                    } else {
+                        List<DishModel> dishList = new ArrayList<DishModel>();
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                        ToastUtils.showToast(context, "未搜索到附近的餐厅");
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    super.onFailure(arg0, arg1, arg2, arg3);
+                    DialogUtils.dismiss();
+
+                }
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                    DialogUtils.dismiss();
+                }
+            });
+        } else {
+            ToastUtils.showToast(context, "当前无网络连接");
+        }
+    }
+
+    private String styleId = "";
+
+    /*   /**
+         * 搜索餐馆
+         *
+         * @param area_info      区域信息
+         * @param search_content 搜索内容
+         * @param style_info     菜系
+         */
+    private void searchShopList(String search_content) {
+        if (NetUtils.isOnline()) {
+            DialogUtils.showProgressDialogWithMessage(context, "正在搜索中");
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("ukey", ukey);
+            params.put("keyword", search_content);
+            params.put("city", city);// 城市id
+            //  params.put("area", mDialog.getAreaId());// 全市时传递0
+            params.put("area1", area1);// 镇id 全市、全区传递0
+            params.put("style", styleId);// 菜系id
+            if (null != mUserInfo) {
+                params.put("lng", mUserInfo.getLng());// 经度
+                params.put("lat", mUserInfo.getLat());// 纬度
+            } else {
+                params.put("lng", Preferences.getString("lng", "", context));// 经度
+                params.put("lat", Preferences.getString("lat", "", context));// 纬度
+            }
+
+            Logger.e("TAG", "=====" + JSON.toJSONString(params));
+
+            FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
+
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    Logger.e("TAG", "" + JSON.toJSONString(body));
+
+                    if (body != null && body.getCode() == 1) {
+                        List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                    } else {
+                        List<DishModel> dishList = new ArrayList<DishModel>();
+                        mAdapter = new DishAdapter(context, dishList);
+                        mListView.setAdapter(mAdapter);
+                        ToastUtils.showToast(context, "未搜索到你要找的餐厅");
+                    }
+
+                    DialogUtils.dismiss();
+                }
+
+                @Override
+                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    super.onFailure(arg0, arg1, arg2, arg3);
+                    DialogUtils.dismiss();
+
+                }
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                    DialogUtils.dismiss();
+                }
+            });
+        } else {
+            ToastUtils.showToast(context, "当前无网络连接");
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (data != null) {
+                    area1 = data.getStringExtra("area1");
+                    // ToastUtil.showS(mContext, details);
+                    // btAddress.setText(city);
+
+                    searchAll();
+                }
+            case 2:
+                if (data != null) {
+                    cooking = data.getStringExtra("cooking");
+                    if("-1".equals(cooking)){
+                        styleId="0";
+                    }else{
+                        styleId=cooking;
+                    }
+                    // ToastUtil.showS(mContext, details);
+                    // btAddress.setText(city);
+
+                    searchShopList("");
+                }
+
+        }
+    }
 }
