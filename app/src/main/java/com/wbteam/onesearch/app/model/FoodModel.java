@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @created:2016-9-22 下午11:44:44
  * @contact:QQ-441293364 TEL-15105695563
  **/
-public class FoodModel implements Serializable {
+public class FoodModel extends Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

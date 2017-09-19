@@ -26,9 +26,12 @@
         SortId="2" />
 <!--AppId="wx27891f02149f28a4"
         AppSecret="6a6ad735e6e22bf609d7ea86e48d6327"-->
+<!--AppId="1b2c101abbaf8"
+        AppSecret="1424e2e31a51475a8085b7bf9cbc14e4"-->
+
     <Wechat
-        AppId="1b2c101abbaf8"
-        AppSecret="1424e2e31a51475a8085b7bf9cbc14e4"
+        AppId="wx27891f02149f28a4"
+        AppSecret="6254bf60ed8524abcc8a93400ef74906"
         BypassApproval="false"
         Enable="true"
         Id="3"
@@ -51,8 +54,8 @@
         SortId="5" /> -->
 
     <WechatMoments
-        AppId="1b2c101abbaf8"
-        AppSecret="1424e2e31a51475a8085b7bf9cbc14e4"
+        AppId="wx27891f02149f28a4"
+        AppSecret="6254bf60ed8524abcc8a93400ef74906"
         BypassApproval="false"
         Enable="true"
         Id="5"

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5.0dip"
-            android:text="食More更新中"
+            android:text="拣饮择食更新中"
             android:textColor="@color/black" />
 
         <ProgressBar

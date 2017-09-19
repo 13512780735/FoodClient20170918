@@ -267,7 +267,7 @@ public class DialogUtils {
 		if(StringUtils.notBlank(msg)){
 			oks.setText(msg);
 		}else{
-			oks.setText("食More APP");
+			oks.setText("拣饮择食 APP");
 		}
 		// 分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
 		oks.setImageUrl(AppConfig.IMAGE_URL_HOST + imgUrl);
@@ -279,7 +279,7 @@ public class DialogUtils {
 		if(StringUtils.notBlank(msg)){
 			oks.setComment(msg);
 		}else{
-			oks.setComment("食More APP");
+			oks.setComment("拣饮择食 APP");
 		}
 		// site是分享此内容的网站名称，仅在QQ空间使用
 		oks.setSite(activity.getString(R.string.app_name));

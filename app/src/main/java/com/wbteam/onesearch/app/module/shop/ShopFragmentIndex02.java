@@ -241,6 +241,7 @@ public class ShopFragmentIndex02 extends BaseFragmentV4 implements ScrollableCon
 			params.put("type", "2");
 			params.put("rid", id);// 餐厅id
 			params.put("page", mCurrentPage+"");
+			Log.d("TAG","mCurrentPage-->"+mCurrentPage);
 			FoodClientApi.post("News/lists", params, mHandler);
 			
 //			new JsonResponseCallback<BizResult>() {
@@ -321,7 +322,7 @@ public class ShopFragmentIndex02 extends BaseFragmentV4 implements ScrollableCon
 		int adapterState = ListBaseAdapter.STATE_EMPTY_ITEM;
 		if (mCurrentPage == 1 && data.size() == 0) {
 			adapterState = ListBaseAdapter.STATE_EMPTY_ITEM;
-		} else if (data.size() == 0 || (data.size() < getPageSize())) {
+		} else if (data.size() == 0 || (data.size() <= getPageSize())) {
 			adapterState = ListBaseAdapter.STATE_NO_MORE;
 			mAdapter.notifyDataSetChanged();
 		} else {

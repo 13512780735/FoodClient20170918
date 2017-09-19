@@ -7,8 +7,8 @@ android {
         applicationId "com.wbteam.onesearch"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 22
-        versionName "1.0.21"
+        versionCode 24
+        versionName "1.0.23"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -16,11 +16,11 @@ android {
         release {
             keyAlias 'znlc'
             keyPassword 'pol1990k'
-            storeFile file('D:/as/food/qianming/xinshi_0912.keystore')
+            storeFile file('F:\\0909\\food\\qianming/xinshi_0912.keystore')
             storePassword 'pol1990k'
         }
         debug {
-            storeFile file('D:/as/food/qianming/xinshi_0912.keystore')
+            storeFile file('F:\\0909\\food\\qianming/xinshi_0912.keystore')
             storePassword "pol1990k"
             keyAlias "znlc"
             keyPassword "pol1990k"
@@ -56,7 +56,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/android-async-http-1.4.5.jar')
+   compile files('libs/android-async-http-1.4.5.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/Bughd_android_sdk_v1.3.7.jar')
     compile files('libs/fastjson-1.2.6.jar')

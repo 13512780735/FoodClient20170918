@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,7 @@ import com.wbteam.onesearch.app.model.banner.Advertisements;
 import com.wbteam.onesearch.app.model.banner.Banner;
 import com.wbteam.onesearch.app.model.banner.BizResultOfBanner;
 import com.wbteam.onesearch.app.module.shop.ShopDetailActivity;
+import com.wbteam.onesearch.app.ui.MainActivity;
 import com.wbteam.onesearch.app.ui.SearchActivity;
 import com.wbteam.onesearch.app.utils.AppUtils;
 import com.wbteam.onesearch.app.utils.DialogUtils;
@@ -365,68 +367,76 @@ import com.wbteam.onesearch.app.weight.LoadingLayout;
 //
 //}
 
-public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
+public class Index01Fragment extends BaseFragmentV4 implements OnClickListener {
 
-	private LocationService locationService;
-	private LinearLayout llscroll;
+    private LocationService locationService;
+    private LinearLayout llscroll;
 
-	private RelativeLayout bottom_adt_view;
-	private LinearLayout ll_bottom_adt;
-	private ImageView iv_close_adt;
+    private RelativeLayout bottom_adt_view;
+    private LinearLayout ll_bottom_adt;
+    private ImageView iv_close_adt;
 
-	private LinearLayout view_search_layout;
+    private LinearLayout view_search_layout;
 
-	private PullToRefreshListView mPullToRefreshListView;
-	private DishAdapter mAdapter;
+    private PullToRefreshListView mPullToRefreshListView;
+    private DishAdapter mAdapter;
 
-	private View mHeadView = null;
-	private String ukey = "";
+    private View mHeadView = null;
+    private String ukey = "";
     private ListView mListView;
+    private List<DishModel> dishList = null;
+    private double lat;
+    private double lng;
 
-	@Override
+    @Override
     public View getSlidableView() {
         return null;
     }
 
     @Override
-	public View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_index_01, container, false);
-	}
+    public View setContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_index_01, container, false);
+    }
 
-	@Override
-	public void initView(View currentView) {
-		if(AppContext.getInstance().getUserInfo()!=null){
-			ukey = AppContext.getInstance().getUserInfo().getUkey();
-		}
-
-		locationCity();
-
-		//mSwipeRefreshLayout = (SwipeRefreshLayout) currentView.findViewById(R.id.swiperefreshlayout);
-		mPullToRefreshListView = (PullToRefreshListView) currentView.findViewById(R.id.listview);
-
+    @Override
+    public void initView(View currentView) {
+        if (AppContext.getInstance().getUserInfo() != null) {
+            ukey = AppContext.getInstance().getUserInfo().getUkey();
+        }
+        String lat1 = UtilPreference.getStringValue(getActivity(), "lat1");
+        String lng1 = UtilPreference.getStringValue(getActivity(), "lng1");
+        if (StringUtils.notBlank(lat1) && StringUtils.notBlank(lng1)) {
+            lat = Double.valueOf(UtilPreference.getStringValue(getActivity(), "lat1"));
+            lng = Double.valueOf(UtilPreference.getStringValue(getActivity(), "lng1"));
+        }else{
+            lat=0.0;
+            lng=0.0;
+        }
+        //mSwipeRefreshLayout = (SwipeRefreshLayout) currentView.findViewById(R.id.swiperefreshlayout);
+        mPullToRefreshListView = (PullToRefreshListView) currentView.findViewById(R.id.listview);
 //		mSwipeRefreshLayout.setOnRefreshListener(this);
 //		mSwipeRefreshLayout.setColorSchemeResources(R.color.swiperefresh_color1, R.color.swiperefresh_color2, R.color.swiperefresh_color3, R.color.swiperefresh_color4);
 
         mListView = mPullToRefreshListView.getRefreshableView();
         mHeadView = getActivity().getLayoutInflater().inflate(R.layout.public_header_index_content, null);
-		mListView.addHeaderView(mHeadView, null, false);
+        mListView.addHeaderView(mHeadView, null, false);
 
-		view_search_layout = (LinearLayout) currentView.findViewById(R.id.view_search_layout);
+        view_search_layout = (LinearLayout) currentView.findViewById(R.id.view_search_layout);
 
-		llscroll = (LinearLayout) mHeadView.findViewById(R.id.llscroll);
-		llscroll.setLayoutParams(AppUtils.getParams(fatherActivity));
+        llscroll = (LinearLayout) mHeadView.findViewById(R.id.llscroll);
+        llscroll.setLayoutParams(AppUtils.getParams(fatherActivity));
 
-		bottom_adt_view = (RelativeLayout) currentView.findViewById(R.id.bottom_adt_view);
-		iv_close_adt = (ImageView) currentView.findViewById(R.id.iv_close_adt);
-		ll_bottom_adt = (LinearLayout) currentView.findViewById(R.id.ll_bottom_adt);
+        bottom_adt_view = (RelativeLayout) currentView.findViewById(R.id.bottom_adt_view);
+        iv_close_adt = (ImageView) currentView.findViewById(R.id.iv_close_adt);
+        ll_bottom_adt = (LinearLayout) currentView.findViewById(R.id.ll_bottom_adt);
 
-		InitViewPager();
+        InitViewPager();
 
-		if (Preferences.getBoolean("index_01", false, getActivity())) {
-			ViewUtils.setGone(bottom_adt_view);
-		} else {
-			InitBottomAdt();
-		}
+        if (Preferences.getBoolean("index_01", false, getActivity())) {
+            ViewUtils.setGone(bottom_adt_view);
+        } else {
+            InitBottomAdt();
+        }
         mPullToRefreshListView.setMode(mPullToRefreshListView.getMode() == PullToRefreshBase.Mode.BOTH ? PullToRefreshBase.Mode.PULL_FROM_START
                 : PullToRefreshBase.Mode.BOTH);
         mPullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -444,8 +454,8 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
                 mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel("松开开始刷新数据");
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(
                         "最后更新时间:" + label);
-				sendReuqest(lat, lng);
-				new GetDataTask().execute();
+                sendReuqest(lat, lng);
+                new GetDataTask().execute();
             }
 
             @Override
@@ -457,8 +467,8 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
                         "已经全部数据加载完毕...");
                 mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel(
                         "已经全部数据加载完毕...");
-				sendReuqest(lat, lng);
-				new GetDataTask().execute();
+                sendReuqest(lat, lng);
+                new GetDataTask().execute();
 //				}
 
             }
@@ -471,157 +481,108 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
 //                      "refreshingLabel");
         mPullToRefreshListView.getLoadingLayoutProxy().setReleaseLabel(
                 "松开即可刷新");
-	}
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		if(AppContext.getInstance().getUserInfo()!=null){
-			ukey = AppContext.getInstance().getUserInfo().getUkey();
-		}
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AppContext.getInstance().getUserInfo() != null) {
+            ukey = AppContext.getInstance().getUserInfo().getUkey();
+        }
+        // locationCity();
+    }
 
-	private void locationCity() {
-		if (NetUtils.isOnline()) {
-			locationService = AppContext.getInstance().locationService;
-			// 获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-			locationService.registerListener(mListener);
-			locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-			DialogUtils.showProgressDialogWithMessage(getActivity(), "正在定位中");
-			locationService.start();
-		} else {
-			ToastUtils.showToast(getActivity(), "当前无网络连接");
-		}
 
-	}
-
-	double lat = 0.0;
-	double lng = 0.0;
-
-	private BDLocationListener mListener = new BDLocationListener() {
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			if (null != location && location.getLocType() != BDLocation.TypeServerError) {
-				//ToastUtils.showToast(getActivity(), "定位成功");
-				locationService.stop();
-				DialogUtils.dismiss();
-
-				String cityCode = location.getCityCode();
-				String city = location.getCity();
-				String district = location.getDistrict();
-				String street = location.getStreet();
-				lat = location.getLatitude();
-				lng = location.getLongitude();
-				UserInfo userInfo = AppContext.getInstance().getUserInfo();
-				if(userInfo!=null){
-					userInfo.setLat(lat + "");
-					userInfo.setLng(lng + "");
-					AppContext.doLogin(userInfo);
-				}else{
-					Preferences.saveString("lat", lat+"", getActivity());
-					Preferences.saveString("lng", lng+"", getActivity());
-				}
-				Logger.e("TAG", "城市编码：" + cityCode);
-				Logger.e("TAG", "城市：" + city);
-				Logger.e("TAG", "区：" + district);//cityCode, city, district, street,
-				UtilPreference.saveString(getActivity(),"lat1",String.valueOf(lat));
-				UtilPreference.saveString(getActivity(),"lng1",String.valueOf(lng));
-				sendReuqest(lat, lng);
-			}
-		}
-
-	};
-
-	@Override
-	public void initData() {
+    @Override
+    public void initData() {
         //locationCity();
+        sendReuqest(lat, lng);
+    }
 
-	}
+    @Override
+    public void initListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-	@Override
-	public void initListener() {
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				try {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
 
 
-					DishModel dishModel = mAdapter.getItem(position - 2);
-					if (dishModel != null) {
-						Intent mIntent = new Intent(getActivity(), ShopDetailActivity.class);
-						//mIntent.putExtra("dish_model", dishModel);
-						mIntent.putExtra("shop_id", dishModel.getId());
-						mIntent.putExtra("distance",dishModel.getDistance());
-						startActivity(mIntent);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+                    DishModel dishModel = mAdapter.getItem(position - 2);
+                    if (dishModel != null) {
+                        Intent mIntent = new Intent(getActivity(), ShopDetailActivity.class);
+                        //mIntent.putExtra("dish_model", dishModel);
+                        mIntent.putExtra("shop_id", dishModel.getId());
+                        mIntent.putExtra("distance", dishModel.getDistance());
+                        startActivity(mIntent);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-		iv_close_adt.setOnClickListener(this);
-		view_search_layout.setOnClickListener(this);
-	}
+        iv_close_adt.setOnClickListener(this);
+        view_search_layout.setOnClickListener(this);
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.iv_close_adt:
-			Preferences.saveBoolean("index_01", true, getActivity());
-			ViewUtils.setGone(bottom_adt_view);
-			break;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_close_adt:
+                Preferences.saveBoolean("index_01", true, getActivity());
+                ViewUtils.setGone(bottom_adt_view);
+                break;
 
-		case R.id.view_search_layout:
-			startActivity(new Intent(getActivity(), SearchActivity.class));
-			break;
+            case R.id.view_search_layout:
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
 
-		default:
-			break;
-		}
-	}
+            default:
+                break;
+        }
+    }
 
-	/**
-	 * 请求列表数据
-	 *
-	 * @param lat
-	 * @param lng
-	 */
-	private void sendReuqest(double lat, double lng) {
-		if (NetUtils.isOnline()) {
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("ukey", ukey);
-			params.put("keyword", "");
-			params.put("city", "");// cityCode
-			params.put("area", "0");// 全市时传递0
-			params.put("area1", "0");// 镇id 全市、全区传递0
-			params.put("style", "");// 菜系id
-			params.put("lng", lng + "");// 经度
-			params.put("lat", lat + "");// 纬度
-			params.put("is_index","1");
-			FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
+    /**
+     * 请求列表数据
+     *
+     * @param lat
+     * @param lng
+     */
+    private void sendReuqest(double lat, double lng) {
+        if (NetUtils.isOnline()) {
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("ukey", ukey);
+            params.put("keyword", "");
+            params.put("city", "");// cityCode
+            params.put("area", "0");// 全市时传递0
+            params.put("area1", "0");// 镇id 全市、全区传递0
+            params.put("style", "");// 菜系id
+            params.put("lng", lng + "");// 经度
+            params.put("lat", lat + "");// 纬度
+            params.put("is_index", "1");
+            FoodClientApi.post("Index/lists", params, new JsonResponseCallback<BizResult>() {
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					// TODO Auto-generated method stub
-					Logger.e("TAG", "" + JSON.toJSONString(body));
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    // TODO Auto-generated method stub
+                    Logger.e("TAG", "" + JSON.toJSONString(body));
 
-					if (body != null && body.getCode() == 1) {
-						List<DishModel> dishList = JSON.parseArray(body.getData(), DishModel.class);
-						mAdapter = new DishAdapter(getActivity(), dishList);
-						mPullToRefreshListView.setAdapter(mAdapter);
-					}
+                    if (body != null && body.getCode() == 1) {
+                        dishList = JSON.parseArray(body.getData(), DishModel.class);
+                        mAdapter = new DishAdapter(getActivity(), dishList);
+                        mPullToRefreshListView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }
 
-					//setSwipeRefreshLoadedState();
-				}
+                    //setSwipeRefreshLoadedState();
+                }
 
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					super.onFailure(arg0, arg1, arg2, arg3);
+                @Override
+                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    super.onFailure(arg0, arg1, arg2, arg3);
 
-				}
+                }
 
                 @Override
                 public void onFinish() {
@@ -629,98 +590,98 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
                     mPullToRefreshListView.onRefreshComplete();
                 }
             });
-		} else {
-			ToastUtils.showToast(getActivity(), "当前无网络连接");
-		}
+        } else {
+            ToastUtils.showToast(getActivity(), "当前无网络连接");
+        }
 
-	}
+    }
 
-	/**
-	 * 广告
-	 */
-	private void InitViewPager() {
-		if (NetUtils.isOnline()) {
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("cat_id", "2");
-			params.put("create_time", System.currentTimeMillis() / 1000 + "");
-			FoodClientApi.post("Ad/adList", params, new JsonResponseCallback<BizResult>() {
+    /**
+     * 广告
+     */
+    private void InitViewPager() {
+        if (NetUtils.isOnline()) {
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("cat_id", "2");
+            params.put("create_time", System.currentTimeMillis() / 1000 + "");
+            FoodClientApi.post("Ad/adList", params, new JsonResponseCallback<BizResult>() {
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
 //					Logger.e("TAG", "广告信息：" + JSON.toJSONString(body));
-					if (body.getCode() == 1) {
-						List<Banner> bannerList = JSON.parseArray(body.getData(), Banner.class);
-						if (bannerList != null) {
-							BizResultOfBanner banner = new BizResultOfBanner();
-							banner.setBannerList(bannerList);
-							llscroll.addView(new Advertisements(fatherActivity, fatherActivity.getLayoutInflater(), 3000).initView(banner));
-						} else {
-							View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-							llscroll.addView(view);
-						}
-					} else {
-						View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-						llscroll.addView(view);
-					}
-				}
+                    if (body.getCode() == 1) {
+                        List<Banner> bannerList = JSON.parseArray(body.getData(), Banner.class);
+                        if (bannerList != null) {
+                            BizResultOfBanner banner = new BizResultOfBanner();
+                            banner.setBannerList(bannerList);
+                            llscroll.addView(new Advertisements(fatherActivity, fatherActivity.getLayoutInflater(), 3000).initView(banner));
+                        } else {
+                            View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                            llscroll.addView(view);
+                        }
+                    } else {
+                        View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                        llscroll.addView(view);
+                    }
+                }
 
-				@Override
-				public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-					super.onFailure(statusCode, headers, responseBody, error);
-					View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-					llscroll.addView(view);
-				}
-			});
-		} else {
-			View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-			llscroll.addView(view);
-		}
-	}
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    super.onFailure(statusCode, headers, responseBody, error);
+                    View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                    llscroll.addView(view);
+                }
+            });
+        } else {
+            View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+            llscroll.addView(view);
+        }
+    }
 
-	/**
-	 * 底部广告
-	 */
-	private void InitBottomAdt() {
-		if (NetUtils.isOnline()) {
-			TreeMap<String, String> params = new TreeMap<String, String>();
-			params.put("cat_id", "4");
-			params.put("create_time", System.currentTimeMillis() / 1000 + "");
-			FoodClientApi.post("Ad/adList", params, new JsonResponseCallback<BizResult>() {
+    /**
+     * 底部广告
+     */
+    private void InitBottomAdt() {
+        if (NetUtils.isOnline()) {
+            TreeMap<String, String> params = new TreeMap<String, String>();
+            params.put("cat_id", "4");
+            params.put("create_time", System.currentTimeMillis() / 1000 + "");
+            FoodClientApi.post("Ad/adList", params, new JsonResponseCallback<BizResult>() {
 
-				@Override
-				public void onSuccess(int statusCode, BizResult body) {
-					if (body.getCode() == 1) {
-						List<Banner> bannerList = JSON.parseArray(body.getData(), Banner.class);
-						if (bannerList != null) {
-							BizResultOfBanner banner = new BizResultOfBanner();
-							banner.setBannerList(bannerList);
-							ll_bottom_adt.addView(new Advertisements(fatherActivity, fatherActivity.getLayoutInflater(), 3000).initView(banner));
-						} else {
-							View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-							ll_bottom_adt.addView(view);
-						}
-					} else {
-						View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-						ll_bottom_adt.addView(view);
-					}
-				}
+                @Override
+                public void onSuccess(int statusCode, BizResult body) {
+                    if (body.getCode() == 1) {
+                        List<Banner> bannerList = JSON.parseArray(body.getData(), Banner.class);
+                        if (bannerList != null) {
+                            BizResultOfBanner banner = new BizResultOfBanner();
+                            banner.setBannerList(bannerList);
+                            ll_bottom_adt.addView(new Advertisements(fatherActivity, fatherActivity.getLayoutInflater(), 3000).initView(banner));
+                        } else {
+                            View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                            ll_bottom_adt.addView(view);
+                        }
+                    } else {
+                        View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                        ll_bottom_adt.addView(view);
+                    }
+                }
 
-				@Override
-				public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-					super.onFailure(statusCode, headers, responseBody, error);
-					View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-					ll_bottom_adt.addView(view);
-				}
-			});
-		} else {
-			View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
-			ll_bottom_adt.addView(view);
-		}
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    super.onFailure(statusCode, headers, responseBody, error);
+                    View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+                    ll_bottom_adt.addView(view);
+                }
+            });
+        } else {
+            View view = fatherActivity.getLayoutInflater().inflate(R.layout.advertisement_item_fitcenter, null);
+            ll_bottom_adt.addView(view);
+        }
 
-		ViewUtils.setVisible(iv_close_adt);
-	}
+        ViewUtils.setVisible(iv_close_adt);
+    }
 
-//	@Override
+    //	@Override
 //	public void onRefresh() {
 //		// 设置顶部正在刷新
 //		mListView.setSelection(0);
@@ -750,22 +711,22 @@ public class Index01Fragment extends BaseFragmentV4 implements OnClickListener{
 //			mSwipeRefreshLayout.setEnabled(true);
 //		}
 //	}
-private class GetDataTask extends AsyncTask<Void, Void, String[]> {
-	@Override
-	protected String[] doInBackground(Void... params) {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return new String[0];
-	}
+    private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+        @Override
+        protected String[] doInBackground(Void... params) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return new String[0];
+        }
 
-	@Override
-	protected void onPostExecute(String[] result) {
-		// Call onRefreshComplete when the list has been refreshed.
-		mPullToRefreshListView.onRefreshComplete();
-		super.onPostExecute(result);
-	}
-}
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Call onRefreshComplete when the list has been refreshed.
+            mPullToRefreshListView.onRefreshComplete();
+            super.onPostExecute(result);
+        }
+    }
 }
